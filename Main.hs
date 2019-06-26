@@ -104,7 +104,7 @@ render state = pictures
     , renderObject blue   $ ship state
     , translate (-fromIntegral width / 2) (-fromIntegral height / 2) $ scale 0.2 0.2 $ color white $ text $ 
         -- show $ ((join (***) $ \x -> showEFloat (Just 4) x "") $ velocity $ planet state)
-        (formatFloat 4 $ Vec.magV $ velocity $ ship state) ++ " m/s"
+        formatFloat 4 (Vec.magV $ velocity $ ship state) ++ " m/s"
         -- show $ lastTraceUpdate state
     ]
     where
@@ -176,8 +176,6 @@ fps = 60
 main :: IO ()
 main = do
     args <- getArgs
-    putStrLn $ show args
     let angle = if "d" `elem` args then deceleratingAngle else acceleratingAngle
-    putStrLn $ show angle
     simulate window background fps (initialState angle) render update
 
