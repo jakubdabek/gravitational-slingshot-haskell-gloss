@@ -2,8 +2,6 @@
 {-# LANGUAGE NumericUnderscores #-}
 module Main(main) where
 
-import Control.Arrow ((***))
-import Control.Monad (join)
 import System.Environment (getArgs)
 import Numeric (showEFloat)
 import Graphics.Gloss
