@@ -153,9 +153,6 @@ applyNTimes :: Int -> (a -> a) -> a -> a
 applyNTimes 0 _ = id
 applyNTimes n f = f . applyNTimes (n - 1) f
 
-update :: ViewPort -> Time -> SimulationState -> SimulationState
-update _ time = applyNTimes (floor (1e2 :: Float)) $ update' $ timeScale * time
-
 update' :: Time -> SimulationState -> SimulationState
 update' seconds sim@Simulation { objects, trace } = sim''
     where accs :: Object -> [Object] -> Acceleration
@@ -175,7 +172,12 @@ fps = 60
 
 main :: IO ()
 main = do
-    args <- getArgs
-    let angle = if "d" `elem` args then deceleratingAngle else acceleratingAngle
-    simulate window background fps (initialState angle) render update
+        args <- getArgs
+        let l = length args
+        let angle = if l >= 1 && "d" == args !! 0 then deceleratingAngle else acceleratingAngle
+        let speed = if l >= 2 then read $ args !! 1 :: Time else 1
+        simulate window background fps (initialState angle) render (update speed)
+    where
+        update :: Time -> ViewPort -> Time -> SimulationState -> SimulationState
+        update speed _ time = applyNTimes (floor (3e2 * speed :: Float)) $ update' $ timeScale * time
 

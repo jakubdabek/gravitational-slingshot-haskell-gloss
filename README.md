@@ -9,7 +9,7 @@ cabal sandbox init
 cabal install --only-dependencies
 cabal configure
 cabal build
-$EXECUTABLE args  # arg 'a' for acceleration, 'd' for deceleration, default 'a'
+$EXECUTABLE [mode] [speed] # mode 'a' for acceleration, 'd' for deceleration, default 'a'
 ```
 
 ### New cabal
@@ -17,5 +17,5 @@ $EXECUTABLE args  # arg 'a' for acceleration, 'd' for deceleration, default 'a'
 ```bash
 cabal sandbox init
 cabal v2-build
-$EXECUTABLE args
+$EXECUTABLE [args...]
 ```
